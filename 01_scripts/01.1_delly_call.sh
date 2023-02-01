@@ -20,12 +20,12 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 
 # LOAD REQUIRED MODULES
 module load delly/1.1.6
-module load bcftools/1.15
+module load bcftools
 
 # Create directory for raw calls
-if [[ ! -d $CALLS_DIR/raw ]]
+if [[ ! -d $CALLS_DIR/delly/raw ]]
 then
-  mkdir $CALLS_DIR/raw
+  mkdir $CALLS_DIR/delly/raw
 fi
 
 # 1. Run delly on each file
