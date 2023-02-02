@@ -4,7 +4,7 @@
 # SV calling is done by sample for high-coverage genomes or in small batches for low-coverage genomes : we have high coverage (16X)
 # Following instructions for germline SV calling (https://github.com/dellytools/delly#germline-sv-calling)
 
-# srun -p ibis_small -J 02_merge_sites -o log/01.2_delly_merge_sites_%j.log /bin/sh 01_scripts/01.2_delly_merge_sites.sh &
+# srun -p ibis_small -J 01.2_delly_merge_sites -o log/01.2_delly_merge_sites_%j.log /bin/sh 01_scripts/01.2_delly_merge_sites.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -24,7 +24,7 @@ module load bcftools
 
 
 # 0. Create directory for merged sites
-if [[ ! -d $CALLS_DIR/delly/merged_sites]]
+if [[ ! -d $CALLS_DIR/delly/merged_sites ]]
 then
   mkdir $CALLS_DIR/delly/merged_sites
 fi
