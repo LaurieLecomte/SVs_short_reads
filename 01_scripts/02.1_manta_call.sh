@@ -17,7 +17,8 @@ REGIONS="02_infos/chrs.bed.gz"
 
 CHR=$1
 
-BAM_LIST=$(for file in $(ls $BAM_DIR/*.bam); do echo '--bam' "$file" ; done)
+#BAM_LIST=$(for file in $(ls $BAM_DIR/*.bam); do echo '--bam' "$file" ; done)
+BAM_LIST="--bam 04_bam/13013A.bam --bam 04_bam/13056A.bam --bam 04_bam/13066A.bam"
 
 CPU=4
 
@@ -48,7 +49,8 @@ bgzip 02_infos/"$CHR".bed -f
 tabix -p bed 02_infos/"$CHR".bed.gz -f
 
 # 1. Workflow configuration : set reference genome and samples for which SV are to be called in order to generate an executable (runWorkflow.py)
-configManta.py --referenceFasta $GENOME --runDir $CALLS_DIR/manta/$CHR --callRegions $REGIONS $(echo $BAM_LIST)
+#configManta.py --referenceFasta $GENOME --runDir $CALLS_DIR/manta/$CHR --callRegions 02_infos/"$CHR".bed.gz $(echo $BAM_LIST)
+configManta.py --referenceFasta $GENOME --runDir $CALLS_DIR/manta/$CHR --callRegions 02_infos/"$CHR".bed.gz  $BAM_LIST
 
 # 3. Launch resulting executable
 ## -j controls the number of cores/nodes

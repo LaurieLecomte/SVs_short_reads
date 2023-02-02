@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Concat VCF from each chromosome
-# srun -c 1 -p small -J 02_concat -o log/02_concat_%j.log /bin/sh 01_scripts/02_concat.sh &
+# srun -c 1 -p small -J 02.2_manta_merge -o log/02.2_manta_merge_%j.log /bin/sh 01_scripts/02.2_manta_merge.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
