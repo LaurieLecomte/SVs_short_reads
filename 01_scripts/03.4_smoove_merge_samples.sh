@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 4th step of SV calling with smoove : merge sites across samples 
-# srun -c 1 --mem=20G -p small -J 04_paste -o log/04_paste_%j.log /bin/sh 01_scripts/04_paste.sh &
+# srun -c 1 --mem=20G -p small -J 03.4_smoove_merge_samples -o log/03.4_smoove_merge_samples_%j.log /bin/sh 01_scripts/03.4_smoove_merge_samples.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -19,4 +19,10 @@ smoove paste --outdir $MERGED_DIR/smoove --name merged $CALLS_DIR/smoove/geno/*.
 
 # 2. Add tags and sort
 bcftools view $MERGED_DIR/smoove/merged.smoove.square.vcf.gz | bcftools +fill-tags | bcftools sort -Oz > $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz
+
+# Clean up 
+rm $CALLS_DIR/smoove/raw/*.bam
+rm $CALLS_DIR/smoove/raw/*.bam.csi
+rm $CALLS_DIR/smoove/raw/*.histo
+rm $CALLS_DIR/smoove/raw/*.sh
 

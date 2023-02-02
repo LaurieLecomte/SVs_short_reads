@@ -14,7 +14,7 @@ FILT_DIR="07_filtered"
 
 SAMPLE=$1
 
-REGIONS_EX="02_infos/excl_chrs.txt"
+
 
 # Create directory for raw calls
 if [[ ! -d $CALLS_DIR/smoove/raw ]]
