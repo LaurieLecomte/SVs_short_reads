@@ -29,7 +29,7 @@ then
 fi
 
 # 1. Run delly on each file
-delly call -g $GENOME $BAM_DIR/"$SAMPLE".bam -o $CALLS_DIR/delly/raw/"$SAMPLE".bcf -x $REGIONS_EX
+delly call -g $GENOME $BAM_DIR/"$SAMPLE".bam -o $CALLS_DIR/delly/raw/"$SAMPLE".bcf -x 02_infos/excl_chrs.bed.gz
 
 
 

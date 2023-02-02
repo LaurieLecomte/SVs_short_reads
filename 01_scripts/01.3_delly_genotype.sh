@@ -30,4 +30,4 @@ then
 fi
 
 # 1. Genotype SV sites across all samples
-delly call -g $GENOME -v $CALLS_DIR/delly/merged_sites.bcf -o $CALLS_DIR/delly/geno/"$SAMPLE".geno.bcf $BAM
+delly call -g $GENOME -v $CALLS_DIR/delly/merged_sites/merged_sites.bcf -o $CALLS_DIR/delly/geno/"$SAMPLE".geno.bcf $BAM

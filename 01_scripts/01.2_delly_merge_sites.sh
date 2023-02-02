@@ -20,17 +20,23 @@ BCF_LIST="02_infos/bcf_list.txt"
 
 # LOAD REQUIRED MODULES
 module load delly/1.1.6
-module load bcftools/1.15
+module load bcftools
 
-# Remove previous list from previous trials
+
+# 0. Create directory for merged sites
+if [[ ! -d $CALLS_DIR/delly/merged_sites]]
+then
+  mkdir $CALLS_DIR/delly/merged_sites
+fi
+
+# 1. Make a list of bcf files to merge
+## Remove previous list from previous trials
 if [[ -f $BCF_LIST ]]
 then
   rm $BCF_LIST
 fi
 
-
-# 1. Make a list of bcf files to merge
 ls -1 $CALLS_DIR/delly/raw/*.bcf > $BCF_LIST
 
 # 2. Merge SV sites into a unified site list
-delly merge -o $CALLS_DIR/delly/merged_sites.bcf $BCF_LIST
+delly merge -o $CALLS_DIR/delly/merged_sites/merged_sites.bcf $BCF_LIST
