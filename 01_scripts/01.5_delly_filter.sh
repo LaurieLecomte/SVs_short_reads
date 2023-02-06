@@ -18,7 +18,7 @@ BCF_GENO_LIST="02_infos/bcf_geno_list.txt"
 
 # LOAD REQUIRED MODULES
 module load delly/1.1.6
-module load bcftools/1.15
+module load bcftools
 
 # 1. Filter calls
 bcftools filter -i 'FILTER="PASS" & PRECISE=1' $MERGED_DIR/delly/delly_merged_sorted.vcf.gz -Oz > $FILT_DIR/delly/delly_PASS_PRECISE.vcf.gz
