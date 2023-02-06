@@ -21,8 +21,8 @@ smoove paste --outdir $MERGED_DIR/smoove --name merged $CALLS_DIR/smoove/geno/*.
 bcftools view $MERGED_DIR/smoove/merged.smoove.square.vcf.gz | bcftools +fill-tags | bcftools sort -Oz > $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz
 
 # Clean up 
-rm $CALLS_DIR/smoove/raw/*.bam
-rm $CALLS_DIR/smoove/raw/*.bam.csi
-rm $CALLS_DIR/smoove/raw/*.histo
-rm $CALLS_DIR/smoove/raw/*.sh
+#rm $CALLS_DIR/smoove/raw/*.bam
+#rm $CALLS_DIR/smoove/raw/*.bam.csi
+#rm $CALLS_DIR/smoove/raw/*.histo
+#rm $CALLS_DIR/smoove/raw/*.sh
 
