@@ -79,21 +79,25 @@ add_ALT <- function(input_vcf, output_vcf, refgenome = NULL) {
   vcf[[2]][dels] <- del_info$pos
   vcf[[4]][dels] <- del_info$ref
   vcf[[5]][dels] <- del_info$alt
-  vcf[[8]][dels] <- paste0('SVTYPE=', del_info$svtype, ';SVLEN=', del_info$svlen, ';END=', del_info$end, ';ALT_DELLY=', del_info$alt)
+  vcf[[8]][dels] <- paste0('SVTYPE=', del_info$svtype, ';SVLEN=', del_info$svlen, ';END=', del_info$end)
+  #vcf[[8]][dels] <- paste0('SVTYPE=', del_info$svtype, ';SVLEN=', del_info$svlen, ';END=', del_info$end, ';ALT_DELLY=', del_info$alt)
   
   vcf[[2]][ins]  <- ins_info$pos
   vcf[[4]][ins]  <- ins_info$ref
   vcf[[5]][ins]  <- ins_info$alt
-  vcf[[8]][ins] <- paste0('SVTYPE=', ins_info$svtype, ';SVLEN=', ins_info$svlen, ';END=', ins_info$end, ';ALT_DELLY=', ins_info$alt)
+  vcf[[8]][ins] <- paste0('SVTYPE=', ins_info$svtype, ';SVLEN=', ins_info$svlen, ';END=', ins_info$end)
+  #vcf[[8]][ins] <- paste0('SVTYPE=', ins_info$svtype, ';SVLEN=', ins_info$svlen, ';END=', ins_info$end, ';ALT_DELLY=', ins_info$alt)
   
   vcf[[2]][dups] <- dup_info$pos
   vcf[[4]][dups] <- dup_info$ref
   vcf[[5]][dups] <- dup_info$alt
-  vcf[[8]][dups] <- paste0('SVTYPE=', dup_info$svtype, ';SVLEN=', dup_info$svlen, ';END=', dup_info$end, ';ALT_DELLY=', dup_info$alt)
+  vcf[[8]][dups] <- paste0('SVTYPE=', dup_info$svtype, ';SVLEN=', dup_info$svlen, ';END=', dup_info$end)
+  #vcf[[8]][dups] <- paste0('SVTYPE=', dup_info$svtype, ';SVLEN=', dup_info$svlen, ';END=', dup_info$end, ';ALT_DELLY=', dup_info$alt)
   
   vcf[[4]][invs] <- inv_info$ref
   vcf[[5]][invs] <- inv_info$alt
-  vcf[[8]][invs] <- paste0('SVTYPE=', inv_info$svtype, ';SVLEN=', inv_info$svlen, ';END=', inv_info$end, ';ALT_DELLY=', inv_info$alt)
+  vcf[[8]][invs] <- paste0('SVTYPE=', inv_info$svtype, ';SVLEN=', inv_info$svlen, ';END=', inv_info$end)
+  #vcf[[8]][invs] <- paste0('SVTYPE=', inv_info$svtype, ';SVLEN=', inv_info$svlen, ';END=', inv_info$end, ';ALT_DELLY=', inv_info$alt)
   
   
   # Format genotypes
