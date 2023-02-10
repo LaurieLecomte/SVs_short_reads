@@ -17,5 +17,5 @@ FILT_DIR="07_filtered"
 module load bcftools/1.15
 
 # 1. Remove imprecise calls and BNDs
-bcftools filter -i 'IMPRECISE=0 & SVTYPE!="BND"' $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz -Oz > $FILT_DIR/smoove/smoove_PRECISE.vcf.gz
-tabix -p vcf $FILT_DIR/smoove/smoove_PRECISE.vcf.gz
+bcftools filter -i 'IMPRECISE=0 & SVTYPE!="BND"' $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz | bcftools sort > $FILT_DIR/smoove/smoove_PRECISE.vcf
+#tabix -p vcf $FILT_DIR/smoove/smoove_PRECISE.vcf.gz

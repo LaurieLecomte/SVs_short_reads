@@ -17,5 +17,5 @@ FILT_DIR="07_filtered"
 module load bcftools/1.15
 
 # 1. Filter calls
-bcftools filter -i 'FILTER="PASS" & IMPRECISE=0' $MERGED_DIR/manta/manta_merged_sorted.vcf.gz -Oz > $FILT_DIR/manta/manta_PASS_PRECISE.vcf.gz
-tabix -p vcf $FILT_DIR/manta/manta_PASS_PRECISE.vcf.gz
+bcftools filter -i 'FILTER="PASS" & IMPRECISE=0' $MERGED_DIR/manta/manta_merged_sorted.vcf.gz | bcftools sort > $FILT_DIR/manta/manta_PASS_PRECISE.vcf
+#tabix -p vcf $FILT_DIR/manta/manta_PASS_PRECISE.vcf.gz
