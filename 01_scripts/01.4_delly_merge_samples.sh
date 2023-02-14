@@ -36,7 +36,7 @@ ls -1 $CALLS_DIR/delly/geno/*.bcf > $BCF_GENO_LIST
 bcftools merge -m id -O b -o $MERGED_DIR/delly/merged_samples.bcf -l $BCF_GENO_LIST
 
 # 3. Convert bcf to vcf using bcftools, add tags, sort and remove excluded contigs from header
-bcftools view $MERGED_DIR/delly/merged_samples.bcf | grep -vFf $REGIONS_EX | bcftools +fill-tags | bcftools sort -Oz > $MERGED_DIR/delly/delly_merged_sorted.vcf.gz
+bcftools view $MERGED_DIR/delly/merged_samples.bcf | grep -vFf $REGIONS_EX  | bcftools sort -Oz > $MERGED_DIR/delly/delly_merged_sorted.vcf.gz
 
 # Clean up
 rm $MERGED_DIR/delly/merged_samples.bcf

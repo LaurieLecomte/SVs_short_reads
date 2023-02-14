@@ -18,7 +18,7 @@ module load bcftools
 smoove paste --outdir $MERGED_DIR/smoove --name merged $CALLS_DIR/smoove/geno/*.vcf.gz
 
 # 2. Add tags and sort
-bcftools view $MERGED_DIR/smoove/merged.smoove.square.vcf.gz | bcftools +fill-tags | bcftools sort -Oz > $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz
+bcftools view $MERGED_DIR/smoove/merged.smoove.square.vcf.gz  | bcftools sort -Oz > $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz
 
 # Clean up 
 #rm $CALLS_DIR/smoove/raw/*.bam

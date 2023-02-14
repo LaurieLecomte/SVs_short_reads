@@ -32,4 +32,4 @@ fi
 ls -1 $CALLS_DIR/manta/manta_sorted_* > $VCF_LIST
 
 # 1. Concat, add tags and sort
-bcftools concat -f $VCF_LIST | bcftools +fill-tags | bcftools sort -Oz > $MERGED_DIR/manta/manta_merged_sorted.vcf.gz
+bcftools concat -f $VCF_LIST  | bcftools sort -Oz > $MERGED_DIR/manta/manta_merged_sorted.vcf.gz
