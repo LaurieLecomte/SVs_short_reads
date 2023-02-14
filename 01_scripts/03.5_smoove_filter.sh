@@ -2,7 +2,11 @@
 
 # Filter for SV calls tagged as PRECISE in smoove's calls
 
+# valeria
 # srun -c 1 -p ibis_small -J 03.5_smoove_filter -o log/03.5_smoove_filter_%j.log /bin/sh 01_scripts/03.5_smoove_filter.sh &
+
+# manitou
+# srun -c 1 -p small -J 03.5_smoove_filter -o log/03.5_smoove_filter_%j.log /bin/sh 01_scripts/03.5_smoove_filter.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -17,5 +21,7 @@ FILT_DIR="07_filtered"
 module load bcftools/1.15
 
 # 1. Remove imprecise calls and BNDs
-bcftools filter -i 'IMPRECISE=0 & SVTYPE!="BND"' $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz | bcftools sort > $FILT_DIR/smoove/smoove_PRECISE.vcf
+bcftools filter -i 'IMPRECISE=0 & SVTYPE!="BND"' $MERGED_DIR/smoove/smoove_merged_sorted.vcf.gz | bcftools annotate -x ^INFO/SVTYPE,INFO/SVLEN,INFO/END | bcftools sort > $FILT_DIR/smoove/smoove_PASS.vcf
 #tabix -p vcf $FILT_DIR/smoove/smoove_PRECISE.vcf.gz
+
+#bcftools annotate -x ^INFO/SVTYPE,INFO/SVLEN,INFO/END $FILT_DIR/smoove/smoove_PRECISE.vcf > $FILT_DIR/smoove/smoove_PRECISE_simpl.vcf
