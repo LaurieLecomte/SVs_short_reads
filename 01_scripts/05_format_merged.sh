@@ -42,8 +42,12 @@ Rscript 01_scripts/format_merged.R $MERGED_VCF $MERGED_UNION_DIR/"$(basename -s 
 # 3. Add header
 cat $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".header $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".vcf.tmp > $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_formatted.vcf
 
-# 4. Sort 
-bcftools sort $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_formatted.vcf > $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf
+
+# 4. Rename samples and sort 
+bcftools query -l $MERGED_VCF > 02_infos/merged_sample_names.original
+
+Rscript 01_scripts/utils/format_merged_sample_names.R 02_infos/merged_sample_names.original delly manta smoove 02_infos/merged_sample_names.final
+bcftools reheader -s 02_infos/merged_sample_names.final $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_formatted.vcf | bcftools sort > $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf
 
 # Clean up 
 rm $MERGED_UNION_DIR/VCF_lines.txt
@@ -51,3 +55,5 @@ rm $MERGED_UNION_DIR/VCF_chrs.txt
 rm $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".header
 rm $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".vcf.tmp
 rm $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_formatted.vcf
+rm 02_infos/merged_sample_names.original
+rm 02_infos/merged_sample_names.final
