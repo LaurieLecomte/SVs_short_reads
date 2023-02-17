@@ -4,6 +4,8 @@
 # If some chromosomes need to be removed from SV calling, they should be added to 02_infos/excl_chrs.txt
 # WARNING : the 02_infos/excl_chrs.txt file mush be encoded in linux format, otherwise grep won't grep, AND have a newline at the end
 
+# /bin/sh 01_scripts/00_prepare_regions.sh
+
 # VARIABLES
 GENOME="03_genome/genome.fasta"
 CHR_LIST="02_infos/chr_list.txt"
@@ -11,8 +13,8 @@ CHR_LIST="02_infos/chr_list.txt"
 REGIONS_EX="02_infos/excl_chrs.txt"
 
 # LOAD REQUIRED MODULES
-module load htslib
-module load samtools
+module load htslib/1.15
+module load samtools/1.15
 
 if [[ -f 02_infos/excl_chrs.bed ]]
 then
