@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # Concat VCF from each chromosome
+# manitou 
 # srun -c 1 -p small -J 02.2_manta_merge -o log/02.2_manta_merge_%j.log /bin/sh 01_scripts/02.2_manta_merge.sh &
+
+# valeria
+# srun -c 1 -p ibis_small --mem=20G --time=1-00:00:00 -J 02.2_manta_merge -o log/02.2_manta_merge_%j.log /bin/sh 01_scripts/02.2_manta_merge.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"

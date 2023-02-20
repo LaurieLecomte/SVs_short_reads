@@ -4,7 +4,7 @@
 # SV calling is done by sample for high-coverage genomes or in small batches for low-coverage genomes : we have high coverage (16X)
 # Following instructions for germline SV calling (https://github.com/dellytools/delly#germline-sv-calling)
 
-# parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 -p ibis_small -J 01.3_delly_genotype_{} -o log/01.3_delly_genotype_{}_%j.log /bin/sh 01_scripts/01.3_delly_genotype.sh {} &
+# parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 -p ibis_small --time=1-00:00:00 --mem=20G -J 01.3_delly_genotype_{} -o log/01.3_delly_genotype_{}_%j.log /bin/sh 01_scripts/01.3_delly_genotype.sh {} &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -20,8 +20,8 @@ BAM="$BAM_DIR/"$SAMPLE".bam"
 REGIONS_EX="02_infos/excl_chrs.txt"
 
 # LOAD REQUIRED MODULES
-module load delly/1.1.6
-module load bcftools/1.15
+#module load delly/1.1.6
+#module load bcftools/1.15
 
 # Create directory for genotyped calls
 if [[ ! -d $CALLS_DIR/delly/geno ]]

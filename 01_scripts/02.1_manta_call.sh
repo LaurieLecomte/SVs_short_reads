@@ -2,7 +2,7 @@
 
 # Call SV in all samples, parallelized by chr
 
-# parallel -a 02_infos/chr_list.txt -k -j 10 srun -c 4 --mem=20G -p small --time=1-00:00 -J 02.1_manta_call_{} -o log/02.1_manta_call_{}_%j.log /bin/sh 01_scripts/02.1_manta_call.sh {} &
+# parallel -a 02_infos/chr_list.txt -k -j 10 srun -c 4 --mem=20G -p ibis_small --time=1-00:00 -J 02.1_manta_call_{} -o log/02.1_manta_call_{}_%j.log /bin/sh 01_scripts/02.1_manta_call.sh {} &
 # srun -c 8 -p ibis_medium --time=7-00:00 -J 02.1_manta_call -o log/02.1_manta_call_%j.log /bin/sh 01_scripts/02.1_manta_call.sh  &
 
 # VARIABLES
@@ -17,16 +17,15 @@ REGIONS="02_infos/chrs.bed.gz"
 
 CHR=$1
 
-#BAM_LIST=$(for file in $(ls $BAM_DIR/*.bam); do echo '--bam' "$file" ; done)
-BAM_LIST="--bam 04_bam/13013A.bam --bam 04_bam/13056A.bam --bam 04_bam/13066A.bam"
+BAM_LIST=$(for file in $(ls $BAM_DIR/*.bam); do echo '--bam' "$file" ; done)
+
 
 CPU=4
 
 # LOAD REQUIRED MODULES
-module load StdEnv/2020  gcc/9.3.0  openmpi/4.0.3
-module load manta/1.6.0
-module load bcftools
-module load samtools
+#module load gcc python/3.10 manta/1.6.0
+#module load bcftools/1.13
+#module load samtools/1.15
 
 ## Paths and exec locations for running manta
 SAMTOOLS_PATH=$(which samtools)

@@ -3,7 +3,7 @@
 # Filter for SV calls tagged as PASS and PRECISE in manta's calls
 
 # valeria
-# srun -c 1 -p ibis_small -J 02.3_manta_filter -o log/02.3_manta_filter_%j.log /bin/sh 01_scripts/02.3_manta_filter.sh &
+# srun -c 1 -p ibis_small --mem=20G --time=1-00:00:00 -J 02.3_manta_filter -o log/02.3_manta_filter_%j.log /bin/sh 01_scripts/02.3_manta_filter.sh &
 
 # manitou
 # srun -c 1 -p small -J 02.3_manta_filter -o log/02.3_manta_filter_%j.log /bin/sh 01_scripts/02.3_manta_filter.sh &

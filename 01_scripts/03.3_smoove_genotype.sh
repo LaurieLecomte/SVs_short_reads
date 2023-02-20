@@ -2,6 +2,7 @@
 
 # 3rd step of SV calling with smoove : genotype for all samples and all sites 
 
+# RUN ON MANITOU ONLY
 # parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 --mem=20G -p small -J 03.3_smoove_genotype_{} -o log/03.3_smoove_genotype_{}_%j.log /bin/sh 01_scripts/03.3_smoove_genotype.sh {} &
 
 # VARIABLES
@@ -13,6 +14,9 @@ MERGED_DIR="06_merged"
 FILT_DIR="07_filtered"
 
 SAMPLE=$1
+
+# LOAD REQUIRED MODULES
+module load python/2.7 gsort/0.1.4 samtools/1.12 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 bcftools/1.13
 
 # 0. Create directory for genotyped calls
 if [[ ! -d $CALLS_DIR/smoove/geno ]]

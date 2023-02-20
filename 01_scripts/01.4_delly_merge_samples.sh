@@ -4,7 +4,7 @@
 # SV calling is done by sample for high-coverage genomes or in small batches for low-coverage genomes : we have high coverage (16X)
 # Following instructions for germline SV calling (https://github.com/dellytools/delly#germline-sv-calling)
 
-# srun -c 1 -p ibis_small -J 01.4_delly_merge_samples -o log/01.4_delly_merge_samples_%j.log 01_scripts/01.4_delly_merge_samples.sh &
+# srun -c 1 -p ibis_small --mem=20G --time=1-00:00:00 -J 01.4_delly_merge_samples -o log/01.4_delly_merge_samples_%j.log 01_scripts/01.4_delly_merge_samples.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -19,8 +19,8 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 BCF_GENO_LIST="02_infos/delly_bcf_list.txt"
 
 # LOAD REQUIRED MODULES
-module load delly/1.1.6
-module load bcftools
+#module load delly/1.1.6
+#module load bcftools
 
 
 # 1. Make a list of bcf files to merge

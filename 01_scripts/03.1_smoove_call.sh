@@ -3,7 +3,6 @@
 # First step of SV calling with smoove : call SV for each sample 
 
 # RUN ON MANITOU ONLY
-
 # parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -p small -c 1 --mem=20G --time=1-00:00 -J 03.1_smoove_call_{} -o log/03.1_smoove_call_{}_%j.log /bin/sh 01_scripts/03.1_smoove_call.sh {} &
 
 # VARIABLES
@@ -17,7 +16,7 @@ FILT_DIR="07_filtered"
 SAMPLE=$1
 
 # LOAD REQUIRED MODULES
-module load python/2.7 gsort/0.1.4 samtools/1.12 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.8
+module load python/2.7 gsort/0.1.4 samtools/1.12 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 bcftools/1.13
 
 
 # Create directory for raw calls
