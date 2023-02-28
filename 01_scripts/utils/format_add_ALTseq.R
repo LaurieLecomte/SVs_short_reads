@@ -2,6 +2,9 @@
 # Main function -----------------------------------------------------------
 add_ALT <- function(input_vcf, output_vcf, refgenome = NULL) {
   
+  # Disable scientific notation
+  options(scipen=999)
+  
   # Checking if the reference genome has been supplied
   if(is.null(refgenome) || !file.exists(refgenome)) {
     stop("Reference genome file is not supplied or does not exist")
@@ -42,21 +45,26 @@ add_ALT <- function(input_vcf, output_vcf, refgenome = NULL) {
   chrs   <- vcf[[1]]
   starts <- vcf[[2]]
   altseq <- vcf[[5]]
-  #svlen  <- as.numeric(sub(".*SVLEN=(-?[0-9]+).*", "\\1", vcf[[8]]))
-  #ends <- as.numeric(sub(".*;END=(-?[0-9]+).*", "\\1", vcf[[8]]))      ######### addition by me
+  svlen  <- as.integer(sub(".*SVLEN=(-?[0-9]+).*", "\\1", vcf[[8]]))
+  #ends <- as.integer(sub(".*;END=(-?[0-9]+).*", "\\1", vcf[[8]]))      ######### addition by me
+  # END field can be at the beginning or in the middle of INFO fields, so we need to extract accordingly
+  ends <- ifelse(test = grepl("^END=", x = vcf[[8]]),
+                 yes = as.integer(sub("^END=(-?[0-9]+).*", "\\1", vcf[[8]])),
+                 no = as.integer(sub(".*;END=(-?[0-9]+).*", "\\1", vcf[[8]]))
+         )
   svtype <- sub(".*SVTYPE=([A-Z]+);.*", "\\1", vcf[[8]])
   
-  #ins_len <- as.numeric(sub(".*;INSLEN=(-?[0-9]+).*", "\\1", vcf[[8]]))  ######### addition by me
+  #ins_len <- as.integer(sub(".*;INSLEN=(-?[0-9]+).*", "\\1", vcf[[8]]))  ######### addition by me
   imprecise <- ifelse(grepl("IMPRECISE", vcf[[8]]), "IMPRECISE", "PRECISE")
   
   consensus <- ifelse(grepl("CONSENSUS", vcf[[8]]), 
                       sub(".*;CONSENSUS=([A-Z]+);.*", "\\1", vcf[[8]]),
                       NA) ######### addition by me, absent if imprecise
   
-  avg_starts <- floor(as.numeric(sub(".*;AVG_START=(-?[0-9.]+).*", "\\1", vcf[[8]])))
-  avg_ends <- floor(as.numeric(sub(".*;AVG_END=(-?[0-9.]+).*", "\\1", vcf[[8]])))
-  avg_lens <- floor(as.numeric(sub(".*;AVG_LEN=(-?[0-9.]+).*", "\\1", vcf[[8]])))
-  widths <- avg_ends - avg_starts ######### addition by me
+  #avg_starts <- floor(as.integer(sub(".*;AVG_START=(-?[0-9.]+).*", "\\1", vcf[[8]])))
+  #avg_ends <- floor(as.integer(sub(".*;AVG_END=(-?[0-9.]+).*", "\\1", vcf[[8]])))
+  #avg_lens <- floor(as.integer(sub(".*;AVG_LEN=(-?[0-9.]+).*", "\\1", vcf[[8]])))
+  widths <- ends - starts ######### addition by me
     
   
   supp_vecs <- sub(".*;SUPP_VEC=([0-1]+);.*", "\\1", vcf[[8]])
@@ -73,11 +81,11 @@ add_ALT <- function(input_vcf, output_vcf, refgenome = NULL) {
                     "111" = 'delly + manta + smoove') })
   
   # Computing the replacement information for each variant
-  del_info <- del_process(chrs[dels], avg_starts[dels], widths[dels], refgenome = refgenome)
-  ins_info <- ins_process(chrs[ins],  avg_starts[ins],  consensus[ins], refgenome = refgenome, 
-                          avg_lens[ins], caller = callers[ins], altseq[ins])
-  dup_info <- dup_process(chrs[dups], avg_starts[dups], widths[dups], refgenome = refgenome)
-  inv_info <- inv_process(chrs[invs], avg_starts[invs], widths[invs], refgenome = refgenome)
+  del_info <- del_process(chrs[dels], starts[dels], widths[dels], refgenome = refgenome)
+  ins_info <- ins_process(chrs[ins],  starts[ins],  consensus[ins], refgenome = refgenome, 
+                          svlen[ins], caller = callers[ins], altseq[ins])
+  dup_info <- dup_process(chrs[dups], starts[dups], widths[dups], refgenome = refgenome)
+  inv_info <- inv_process(chrs[invs], starts[invs], widths[invs], refgenome = refgenome)
   
   # Assigning the results to the right columns of the vcf file
   vcf[[2]][dels] <- del_info$pos
@@ -145,11 +153,11 @@ del_process <- function(chr, start, width, refgenome) {
   alt <- Rsamtools::scanFa(refgenome, alt_range)
   
   # Returning the formatted information
-  list(pos = pos, 
+  list(pos = as.integer(pos), 
        ref = unname(as.character(ref)), 
        alt = unname(as.character(alt)),
-       svlen = (0 - width),
-       end = end, 
+       svlen = as.integer(0 - width),
+       end = as.integer(end), 
        svtype = 'DEL'
   )
 }
@@ -181,11 +189,11 @@ ins_process <- function(chr, start, cons, refgenome, ins_length, caller, altseq)
                 no = altseq)
   
   # Returning the formatted information
-  list(pos = pos, 
+  list(pos = as.integer(pos), 
        ref = unname(as.character(ref)), 
        alt = alt,
-       svlen = ins_length,
-       end = pos,
+       svlen = as.integer(ins_length),
+       end = as.integer(pos),
        svtype = 'INS'
   )
 }
@@ -217,11 +225,11 @@ dup_process <- function(chr, start, width, refgenome) {
   ref <- Rsamtools::scanFa(refgenome, ref_range)
   
   # Returning the formatted information
-  list(pos = pos, 
+  list(pos = as.integer(pos), 
        ref = as.character(unname(ref)), 
        alt = as.character(unname(alt)),
-       svlen = width,
-       end = end,
+       svlen = as.integer(width),
+       end = as.integer(end),
        svtype = 'DUP')
 }
 
@@ -245,11 +253,11 @@ inv_process <- function(chr, start, width, refgenome) {
   # The alt sequence is simply the reverse complement
   alt <- sapply(unname(as.character(ref)), revcomp, USE.NAMES = FALSE)
   
-  list(pos = start, 
+  list(pos = as.integer(start), 
        ref = as.character(unname(ref)), 
        alt = alt,
-       svlen = width, 
-       end = end,
+       svlen = as.integer(width), 
+       end = as.integer(end),
        svtype = 'INV')
   
 }
