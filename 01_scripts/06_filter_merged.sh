@@ -26,8 +26,8 @@ CPU=2
 # LOAD REQUIRED MODULES
 module load bcftools
 
-# 1. Filter for SVs over 50 bp and supported by at least 2 tools
-bcftools filter -i 'SUPP!="1" & ABS(SVLEN) >= 50' $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf --threads $CPU | bcftools +fill-tags --threads $CPU | bcftools sort > $FILT_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_SUPP2.vcf
+# 1. Filter for SVs over 50 bp and supported by at least 2 tools. WARNING : SUPP is an integer since jasmine 1.1.5
+bcftools filter -i 'SUPP!=1 & ABS(SVLEN) >= 50' $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf --threads $CPU | bcftools +fill-tags --threads $CPU | bcftools sort > $FILT_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_SUPP2.vcf
 
 # 2. Extract indels (<50 bp) supported by at least 2 tools, for reference
-bcftools filter -i 'SUPP!="1" & ABS(SVLEN) < 50' $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf --threads $CPU | bcftools +fill-tags --threads $CPU | bcftools sort > $FILT_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_SUPP2_indels.vcf
+bcftools filter -i 'SUPP!=1 & ABS(SVLEN) < 50' $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".sorted.vcf --threads $CPU | bcftools +fill-tags --threads $CPU | bcftools sort > $FILT_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_SUPP2_indels.vcf
