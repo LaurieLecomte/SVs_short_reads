@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Format merged output to prepare for merging with SVs from long reads
-# As of 20230214, can be executed only in a jupyterhub on valeria
+# As of 20230214, can be executed on valeria
 
-# srun -c 1 -p ibis_small -J 05_format_merged -o log/05_format_merged_%j.log /bin/sh 01_scripts/05_format_merged.sh &
+# srun -c 1 -p ibis_small --mem=100G --time=1-00:00:00 -J 05_format_merged -o log/05_format_merged_%j.log /bin/sh 01_scripts/05_format_merged.sh &
  
 # VARIABLES
 GENOME="03_genome/genome.fasta"
@@ -24,8 +24,8 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 
 
 # LOAD REQUIRED MODULES
-module load R/4.1
-module load bcftools 
+#module load R/4.1
+#module load bcftools 
 
 # 1. Format header
 ## Extract lines for fields other than INFO, FORMAT and bcftools commands
