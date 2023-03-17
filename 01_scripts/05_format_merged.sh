@@ -37,7 +37,7 @@ bcftools view -h $MERGED_VCF | grep 'contig' | grep -vFf $REGIONS_EX > $MERGED_U
 cat $MERGED_UNION_DIR/VCF_lines.txt $MERGED_UNION_DIR/VCF_chrs.txt > $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".header
 
 # 2. Format VCF : add explicit alternate sequence when possible
-Rscript 01_scripts/format_merged.R $MERGED_VCF $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".vcf.tmp $GENOME
+Rscript 01_scripts/utils/format_merged.R $MERGED_VCF $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".vcf.tmp $GENOME
 
 # 3. Add header
 cat $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".header $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)".vcf.tmp > $MERGED_UNION_DIR/"$(basename -s .vcf $MERGED_VCF)"_formatted.vcf
