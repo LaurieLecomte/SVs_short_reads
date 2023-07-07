@@ -58,7 +58,7 @@ for (i in c(CALLER1, CALLER2, CALLER3)){
 library(tidyr)
 merged_long <- 
 pivot_longer(data = merged, 
-             cols = c('delly', 'manta', 'smoove'),
+             cols = c(CALLER1, CALLER2, CALLER3),
              values_to = 'single_caller_yes',
              names_to = 'single_caller'
              )
@@ -87,7 +87,7 @@ for (i in 1:length(svtypes)) {
 
 
 ggplot(data = merged_long_bycaller) + 
-  facet_grid(factor(single_caller, levels = c('delly', 'manta', 'smoove')) ~ ., 
+  facet_grid(factor(single_caller, levels = c(CALLER1, CALLER2, CALLER3)) ~ ., 
              scales = 'free_y') +
   geom_bar(aes(x = SVLEN_bin, fill = SVTYPE)) + 
   theme(
