@@ -8,9 +8,9 @@
 1. Prepare required regions files in .bed and .txt : `00_prepare_regions.sh`
 2. **Call SVs** : the 3 tools may be used independently in any order or at the same time.
 
-...2.1. delly : scripts `01.1` to `01.5`
-...2.2. manta : scripts `02.1` to `02.3`
-...2.3. smoove : scripts `03.1` to `03.5`
+   2.1. delly : scripts `01.1` to `01.5`
+   2.2. manta : scripts `02.1` to `02.3`
+   2.3. smoove : scripts `03.1` to `03.5`
 
 3. **Merge SV calls** across callers : `04_merge_callers.sh`
 4. Format merged output : `05_format_merged.sh`
