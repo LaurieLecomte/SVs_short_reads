@@ -18,6 +18,16 @@
 4. Format merged output : `05_format_merged.sh`
 5. **Filter** merged output : `06_filter_merged.sh` 
 
+### Additional scripts
+
+Other scripts that target a specific step or operation conducted in one of the main scripts ore that allow additional analyses are provided in the `01_scripts/utils` subdirectory.
+
+* `01_scripts/utils/format_add_ALTseq.R` : adds an explicit alternate sequence (when possible) to the merged SVs. Called by the `01_scripts/utils/format_merged.R` script featured in the `05_format_merged.sh` main script.
+* `01_scripts/utils/format_merged_sample_names.R` : add unique sample names to the merged VCF, also called by the `05_format_merged.sh` main script.
+* `01_scripts/utils/convertInversion.py` : used for converting manta BNDs to inversions in the `02.1_manta_call` main script. It comes from the manta GitHub repository (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/src/python/libexec/convertInversion.py) and is licensed under the GNU General Public License v3.0 (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/LICENSE.txt).
+* `01_scripts/utils/combined_plot_by_caller.R` : used for plotting filtered short-read SVs (Supp. Fig. 2)
+
+Older scripts used for development or debugging purposes are stored in the `01_scripts/archive` folder for future reference if needed. These are not meant to be used in their current state and may be obsolete.
 
 ## Prerequisites
 
