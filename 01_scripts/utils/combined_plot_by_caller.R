@@ -3,8 +3,8 @@
 library(ggplot2)
 library(scales)
 
-MERGED <- "/mnt/ibis/lbernatchez/users/lalec31/RDC_Romaine/01_short_reads/02_SV/SVs_short_reads/08_merged_union/merged_delly_manta_smoove.table"
-FILT <- "/mnt/ibis/lbernatchez/users/lalec31/RDC_Romaine/01_short_reads/02_SV/SVs_short_reads/09_filtered_union/merged_delly_manta_smoove_SUPP2.table"
+MERGED <- "08_merged_union/merged_delly_manta_smoove.table"
+FILT <- "09_filtered_union/merged_delly_manta_smoove_SUPP2.table"
 
 CALLER1 <- 'DELLY'
 CALLER2 <- 'Manta'
