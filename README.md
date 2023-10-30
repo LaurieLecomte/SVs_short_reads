@@ -20,12 +20,12 @@
 
 ### Additional scripts
 
-Other scripts that target a specific step or operation conducted in one of the main scripts ore that allow additional analyses are provided in the `01_scripts/utils` subdirectory.
+Other scripts targeting a specific step or operation conducted in one of the main scripts or allowing additional analyses are provided in the `01_scripts/utils` subdirectory.
 
 * `01_scripts/utils/format_add_ALTseq.R` : adds an explicit alternate sequence (when possible) to the merged SVs. Called by the `01_scripts/utils/format_merged.R` script featured in the `05_format_merged.sh` main script.
 * `01_scripts/utils/format_merged_sample_names.R` : add unique sample names to the merged VCF, also called by the `05_format_merged.sh` main script.
-* `01_scripts/utils/convertInversion.py` : used for converting manta BNDs to inversions in the `02.1_manta_call` main script. It comes from the manta GitHub repository (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/src/python/libexec/convertInversion.py) and is licensed under the GNU General Public License v3.0 (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/LICENSE.txt).
-* `01_scripts/utils/combined_plot_by_caller.R` : used for plotting filtered short-read SVs (Supp. Fig. 2)
+* `01_scripts/utils/convertInversion.py` : used for converting manta BNDs to inversions in the `02.1_manta_call` main script. It comes from the [manta GitHub repository](https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/src/python/libexec/convertInversion.py) and is licensed under the [GNU General Public License v3.0](https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/LICENSE.txt).
+* `01_scripts/utils/combined_plot_by_caller.R` : used for plotting filtered short-read SVs (Supp. Fig. from the paper [Investigating structural variant, indel and single nucleotide polymorphism differentiation between locally adapted Atlantic salmon populations using whole genome sequencing and a hybrid genomic polymorphism detection approach](https://www.biorxiv.org/content/10.1101/2023.09.12.557169v1))
 
 Older scripts used for development or debugging purposes are stored in the `01_scripts/archive` folder for future reference if needed. These are not meant to be used in their current state and may be obsolete.
 
@@ -34,11 +34,18 @@ Older scripts used for development or debugging purposes are stored in the `01_s
 ### Files
 
 * A reference genome named `genome.fasta` and its index (.fai) in `03_genome`
-* Bam files for all samples and their index. These can be soft-linked in the 04_bam folder for easier handling : if `$BAM_PATH` is the remote path to bam files, use `for file in $(ls -1 $BAM_PATH/*); do ln -s $file ./04_bam; done`. These should be named as `SAMPLEID.bam` (see sample ID list below).
+
+* Bam files for all samples and their index. These can be soft-linked in the 04_bam folder for easier handling : if `$BAM_PATH` is the remote path to bam files, use `for file in $(ls -1 $BAM_PATH/*); do ln -s $file ./04_bam; done`. These should be named as `SAMPLEID.bam` (see sample ID list below). 
+  * **NOTE** : a unique `RG tag` is required in bam files' entries for running `smoove` (and possibly other callers). If these read RG tags are missing or not unique, see the script [`10_replace_RG.sh`](https://github.com/enormandeau/wgs_sample_preparation/blob/master/01_scripts/10_replace_RG.sh), which adds unique RG tags *inside* bam files AND in their header.
+
 * A bam files list in `02_infos`. This list can be generated with the following command, where `$BAM_DIR` is the path of the directory where bam files are located : `ls -1 $BAM_DIR/*.bam > 02_infos/bam_list.txt`
+
 * A sample IDs list in `02_infos`, one ID per line. This list can be used for renaming bam files symlinks in `$BAM_DIR`, adjust `grep` command as required (warning : use carefully): `less 02_infos/ind_ALL.txt | while read ID; do BAM_NAME=$(ls $BAM_DIR/*.bam | grep "$ID"); mv $BAM_NAME $BAM_DIR/"$ID".bam; done` and `less 02_infos/ind_ALL.txt | while read ID; do BAM_NAME=$(ls $BAM_DIR/*.bai | grep "$ID"); mv $BAM_NAME $BAM_DIR/"$ID".bam.bai; done`
+
 * A chromosomes list (or contigs, or sites) in `02_infos`. This list is used for parallelizing the SV calling step. It can be produced from the indexed genome file (`"$GENOME".fai`) : `less "$GENOME".fai | cut -f1 > 02_infos/chr_list.txt`
+
 * If some chromosomes are to be excluded from the SV calling step, such as unplaced contigs, these must be listed in `02_infos/excl_chrs.txt`, which needs to be encoded in linux format AND have a newline at the end.
+
 * A sample IDs list (`02_infos/ind_ALL.txt`), one ID per line
 
 
@@ -78,10 +85,6 @@ Call SVs in all samples in regions other than the ones in `02_infos/excl_chrs.tx
 ### Manta
 
 #### `02.1_manta_call.sh`
-
-**NOTE** : The script `convertInversion.py` comes from the manta GitHub repository (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/src/python/libexec/convertInversion.py) and is licensed under the GNU General Public License v3.0 (https://github.com/Illumina/manta/blob/75b5c38d4fcd2f6961197b28a41eb61856f2d976/LICENSE.txt)
-
-
 #### `02.2_manta_merge.sh`
 #### `02.3_manta_filter.sh`
 
