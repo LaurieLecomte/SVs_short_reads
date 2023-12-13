@@ -11,10 +11,12 @@ OUTPUT <- argv[5]
 names_ori <- read.table(NAMES_ORI, col.names = 'ori')
 
 # 2. Split original names : extract first character representing caller 
-names_ori$caller_num <- sapply(X = strsplit(x = as.character(names_ori$ori), split = '_'), FUN = '[', 1) 
+#names_ori$caller_num <- sapply(X = strsplit(x = as.character(names_ori$ori), split = '_'), FUN = '[', 1) 
+names_ori$caller_num <- sapply(X = regmatches(names_ori$ori, regexpr("_", names_ori$ori), invert = TRUE), FUN = '[', 1)
 
 # 3. Split original names : extract sample name
-names_ori$ID <- sapply(X = strsplit(x = as.character(names_ori$ori), split = "_"), FUN = '[', 2) 
+#names_ori$ID <- sapply(X = strsplit(x = as.character(names_ori$ori), split = "_"), FUN = '[', 2) 
+names_ori$ID <- sapply(X = regmatches(names_ori$ori, regexpr("_", names_ori$ori), invert = TRUE), FUN = '[', 2)
 
 # 4. Replace 0,1,2 by caller's name
 names_ori$caller_name <- 
