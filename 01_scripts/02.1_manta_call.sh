@@ -31,7 +31,7 @@ CPU=4
 SAMTOOLS_PATH=$(which samtools)
 
 # Increase opened file number limit
-ulimit -S -n 2048
+ulimit -S -n 12288
 
 # 0. Create output directory
 if [[ ! -d $CALLS_DIR/manta/"$CHR" ]]
