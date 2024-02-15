@@ -51,11 +51,40 @@ Older scripts used for development or debugging purposes are stored in the `01_s
 
 ### Software
 
-#### For Manitou and Valeria users
+#### For Manitou users
+Most programs are available as modules on Manitou, which are automatically loaded in the `#LOAD REQUIRED MODULES` section in each script.
+However, custom conda environments are required for running `delly` and `jasmine`, as these programs are not available on Manitou; See the [Conda environment preparation](#Conda environment preparation) section below. 
+
+### For users working with other computing clusters and servers
+The program versions specified in this pipeline refer to the versions available on IBIS' bioinformatics servers when this pipeline was built in 2021-2022, and are likely not available on all other servers. 
+Please add a '#' at the beginning of each line in the `#LOAD REQUIRED MODULES` section in each script (or remove these lines), and follow the [Conda environment preparation](#Conda environment preparation) to create custom conda environments with correct program versions and dependencies.
+A R installation is also required.
 
 
 
 ## Detailed Walkthrough
+
+For running each script, copy the `srun` command from the script's header to the terminal and adjust parameters (memory, partition, time limit) if necessary.  
+
+
+### Conda environment preparation
+
+#### SV calling environment (`SVs_SR`)
+From the main directory, run `conda create --name SVs_SR --file SVs_SR_env.txt`
+
+This environment is used for calling SVs and contains the following callers:
+* delly 1.1.6
+* manta 1.6.0
+* smoove 0.2.8 and its dependencies
+* bcftools 1.13
+
+
+#### SV merging environment (`jasmine_1.1.5`)
+From the main directory, run `conda create --name jasmine_1.1.5 --file jasmine_1.1.5_env.txt`
+
+This environment is used for merging SVs across callers, and contains [jasmine 1.1.5](https://github.com/mkirsche/Jasmine) and bcftools 1.13.
+
+
 
 ### `00_prepare_regions.sh`
 
@@ -69,6 +98,8 @@ This script prepares the bed files required for specifying the regions in which 
 ### Delly
 
 Based on instructions for germline calling in high coverage genomes on [delly's GitHub](https://github.com/dellytools/delly#germline-sv-calling).
+
+Before running each script for delly, activate the `SVs_SR` env (even if you are working on Manitou) : `conda activate SVs_SR`
 
 #### `01.1_delly_call.sh`
 
@@ -97,6 +128,7 @@ Call SVs in all samples in regions other than the ones in `02_infos/excl_chrs.tx
 #### `03.5_smoove_filter.sh`
 
 ### `04_merge_callers.sh`
+Before running this script, activate the `jasmine_1.1.5` env (even if you are working on Manitou): `conda activate jasmine_1.1.5`
 
 ### `05_format_merged.sh`
 
