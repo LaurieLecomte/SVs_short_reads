@@ -1,11 +1,8 @@
-# SV calling pipeline from short read sequencing data
-
-## TO DO
-* Load required modules outside of scripts and correct versions for both manitou and valeria 
+# SV calling pipeline from short-read sequencing data
 
 ## Pipeline Overview
 
-1. Prepare required regions files in .bed and .txt : `00_prepare_regions.sh`
+1. **Prepare** required regions files in .bed and .txt : `00_prepare_regions.sh`
 2. **Call SVs** : the 3 tools may be used independently in any order or at the same time.
 
    2.1. delly : scripts `01.1` to `01.5`
@@ -15,7 +12,7 @@
    2.3. smoove : scripts `03.1` to `03.5`
 
 3. **Merge SV calls** across callers : `04_merge_callers.sh`
-4. Format merged output : `05_format_merged.sh`
+4. **Format** merged output : `05_format_merged.sh`
 5. **Filter** merged output : `06_filter_merged.sh` 
 
 ### Additional scripts
@@ -55,7 +52,7 @@ Older scripts used for development or debugging purposes are stored in the `01_s
 Most programs are available as modules on Manitou, which are automatically loaded in the `#LOAD REQUIRED MODULES` section in each script.
 However, custom conda environments are required for running `delly` and `jasmine`, as these programs are not available on Manitou; See the [Conda environment preparation](#conda-environment-preparation) section below. 
 
-### For users working with other computing clusters and servers
+#### For users working with other computing clusters and servers
 The program versions specified in this pipeline refer to the versions available on IBIS' bioinformatics servers when this pipeline was built in 2021-2022, and are likely not available on all other servers. 
 Please add a '#' at the beginning of each line in the `#LOAD REQUIRED MODULES` section in each script (or remove these lines), and follow the [Conda environment preparation](#conda-environment-preparation) to create custom conda environments with correct program versions and dependencies.
 A R installation is also required.
@@ -85,8 +82,9 @@ From the main directory, run `conda create --name jasmine_1.1.5 --file jasmine_1
 This environment is used for merging SVs across callers, and contains [jasmine 1.1.5](https://github.com/mkirsche/Jasmine) and bcftools 1.13.
 
 
+### Main pipeline
 
-### `00_prepare_regions.sh`
+#### `00_prepare_regions.sh`
 
 This script prepares the bed files required for specifying the regions in which SVs must be called or must not be called. It first produces a bed file from the reference fasta in order to yield : 
 
@@ -95,43 +93,38 @@ This script prepares the bed files required for specifying the regions in which 
 * A bed file of excluded regions, for running smoove
 
 
-### Delly
+#### Delly
 
 Based on instructions for germline calling in high coverage genomes on [delly's GitHub](https://github.com/dellytools/delly#germline-sv-calling).
 
 Before running each script for delly, activate the `SVs_SR` env (even if you are working on Manitou) : `conda activate SVs_SR`
 
-#### `01.1_delly_call.sh`
+##### `01.1_delly_call.sh`
 
-Call SVs in all samples in regions other than the ones in `02_infos/excl_chrs.txt`.
+##### `01.2_delly_merge_sites.sh`
+##### `01.3_delly_genotype.sh`
+##### `01.4_delly_merge_samples.sh`
+##### `01.5_delly_filter.sh`
 
-* On manitou : `parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 --mem=20G -p medium --time=7-00:00 -J 01.1_delly_call_{} -o log/01.1_delly_call_{}_%j.log 01_scripts/01.1_delly_call.sh {} &`
-* On valeria : `parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 --mem=20G -p ibis_medium --time=7-00:00 -J 01.1_delly_call_{} -o log/01.1_delly_call_{}_%j.log 01_scripts/01.1_delly_call.sh {} &`
+#### Manta
 
-#### `01.2_delly_merge_sites.sh`
-#### `01.3_delly_genotype.sh`
-#### `01.4_delly_merge_samples.sh`
-#### `01.5_delly_filter.sh`
+##### `02.1_manta_call.sh`
+##### `02.2_manta_merge.sh`
+##### `02.3_manta_filter.sh`
 
-### Manta
+#### Smoove
 
-#### `02.1_manta_call.sh`
-#### `02.2_manta_merge.sh`
-#### `02.3_manta_filter.sh`
+##### `03.1_smoove_call.sh`
+##### `03.2_smoove_merge.sh`
+##### `03.3_smoove_genotype.sh`
+##### `03.4_smoove_merge_samples.sh`
+##### `03.5_smoove_filter.sh`
 
-### Smoove
-
-#### `03.1_smoove_call.sh`
-#### `03.2_smoove_merge.sh`
-#### `03.3_smoove_genotype.sh`
-#### `03.4_smoove_merge_samples.sh`
-#### `03.5_smoove_filter.sh`
-
-### `04_merge_callers.sh`
+#### `04_merge_callers.sh`
 Before running this script, activate the `jasmine_1.1.5` env (even if you are working on Manitou): `conda activate jasmine_1.1.5`
 
-### `05_format_merged.sh`
+#### `05_format_merged.sh`
 
-### `06_filter_merged.sh`
+#### `06_filter_merged.sh`
 
 
