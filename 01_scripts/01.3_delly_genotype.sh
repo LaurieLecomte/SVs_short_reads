@@ -21,7 +21,7 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 
 # LOAD REQUIRED MODULES
 #module load delly/1.1.6
-#module load bcftools/1.15
+#module load bcftools/1.13
 
 # Create directory for genotyped calls
 if [[ ! -d $CALLS_DIR/delly/geno ]]

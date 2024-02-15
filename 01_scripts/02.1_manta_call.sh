@@ -23,9 +23,9 @@ BAM_LIST=$(for file in $(ls $BAM_DIR/*.bam); do echo '--bam' "$file" ; done)
 CPU=4
 
 # LOAD REQUIRED MODULES
-#module load gcc python/3.10 manta/1.6.0
+#module load gcc/6.2.0 python/3.10 manta/1.6.0
 #module load bcftools/1.13
-#module load samtools/1.15
+#module load samtools/1.13
 
 ## Paths and exec locations for running manta
 SAMTOOLS_PATH=$(which samtools)

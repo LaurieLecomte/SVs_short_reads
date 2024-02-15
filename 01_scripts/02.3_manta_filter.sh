@@ -18,7 +18,7 @@ FILT_DIR="07_filtered"
 
 
 # LOAD REQUIRED MODULES
-module load bcftools
+module load bcftools/1.13
 
 # 1. Filter for PASS and PRECISE calls, remove BNDs if any, then extract required fields
 bcftools filter -i 'FILTER="PASS" & IMPRECISE=0 & SVTYPE!="BND"' $MERGED_DIR/manta/manta_merged_sorted.vcf.gz | bcftools annotate -x ^INFO/SVTYPE,INFO/SVLEN,INFO/END | bcftools sort > $FILT_DIR/manta/manta_PASS_PRECISE.vcf

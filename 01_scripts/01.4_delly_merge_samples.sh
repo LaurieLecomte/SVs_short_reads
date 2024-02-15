@@ -20,7 +20,7 @@ BCF_GENO_LIST="02_infos/delly_bcf_list.txt"
 
 # LOAD REQUIRED MODULES
 #module load delly/1.1.6
-#module load bcftools
+#module load bcftools/1.13
 
 
 # 1. Make a list of bcf files to merge

@@ -21,8 +21,8 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 BCF_GENO_LIST="02_infos/bcf_geno_list.txt"
 
 # LOAD REQUIRED MODULES
-#module load delly
-#module load bcftools
+#module load delly/1.1.6
+#module load bcftools/1.13
 
 # 1. Filter for PASS and PRECISE calls, remove BNDs, then extract required fields
 bcftools filter -i 'FILTER="PASS" & PRECISE=1 & SVTYPE!="BND"' $MERGED_DIR/delly/delly_merged_sorted.vcf.gz | bcftools annotate -x ^INFO/SVTYPE,INFO/SVLEN,INFO/END,INFO/CONSENSUS | bcftools sort > $FILT_DIR/delly/delly_PASS_PRECISE.vcf

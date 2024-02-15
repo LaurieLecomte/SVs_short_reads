@@ -24,7 +24,7 @@ VCF_LIST="02_infos/manta_vcf_list.txt"
 CPU=4
 
 # LOAD REQUIRED MODULES
-module load bcftools
+module load bcftools/1.13
 
 # 1. Make a list of VCFs to concatenate
 ## Remove previous list from previous trials

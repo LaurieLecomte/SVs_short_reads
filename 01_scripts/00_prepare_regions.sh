@@ -13,8 +13,8 @@ CHR_LIST="02_infos/chr_list.txt"
 REGIONS_EX="02_infos/excl_chrs.txt"
 
 # LOAD REQUIRED MODULES
-module load htslib/1.15
-module load samtools/1.15
+module load htslib/1.13
+module load samtools/1.13
 
 if [[ -f 02_infos/excl_chrs.bed ]]
 then

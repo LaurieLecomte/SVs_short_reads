@@ -16,7 +16,9 @@ FILT_DIR="07_filtered"
 SAMPLE=$1
 
 # LOAD REQUIRED MODULES
-module load python/2.7 gsort/0.1.4 samtools/1.12 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 bcftools/1.13
+module load python/2.7 gsort/0.1.4 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 
+module load samtools/1.12
+module load bcftools/1.13
 
 
 # Create directory for raw calls

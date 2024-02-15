@@ -24,8 +24,8 @@ REGIONS_EX="02_infos/excl_chrs.txt"
 
 
 # LOAD REQUIRED MODULES
-#module load R/4.1
-#module load bcftools 
+module load R/4.1
+module load bcftools/1.13
 
 # 1. Format header
 ## Extract lines for fields other than INFO, FORMAT and bcftools commands

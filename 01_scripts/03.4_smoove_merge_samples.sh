@@ -14,7 +14,9 @@ MERGED_DIR="06_merged"
 FILT_DIR="07_filtered"
 
 # LOAD REQUIRED MODULES
-module load python/2.7 gsort/0.1.4 samtools/1.12 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 bcftools/1.13
+module load python/2.7 gsort/0.1.4 lumpy-sv/0.3.1 svtyper/0.7.1 smoove/0.2.7 
+module load samtools/1.12
+module load bcftools/1.13
 
 # 1. Paste all the single sample VCFs with the same number of variants to get a single, squared, joint-called file.
 smoove paste --outdir $MERGED_DIR/smoove --name merged $CALLS_DIR/smoove/geno/*.vcf.gz
