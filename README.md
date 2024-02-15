@@ -53,11 +53,11 @@ Older scripts used for development or debugging purposes are stored in the `01_s
 
 #### For Manitou users
 Most programs are available as modules on Manitou, which are automatically loaded in the `#LOAD REQUIRED MODULES` section in each script.
-However, custom conda environments are required for running `delly` and `jasmine`, as these programs are not available on Manitou; See the [Conda environment preparation](#Conda environment preparation) section below. 
+However, custom conda environments are required for running `delly` and `jasmine`, as these programs are not available on Manitou; See the [Conda environment preparation](#conda environment preparation) section below. 
 
 ### For users working with other computing clusters and servers
 The program versions specified in this pipeline refer to the versions available on IBIS' bioinformatics servers when this pipeline was built in 2021-2022, and are likely not available on all other servers. 
-Please add a '#' at the beginning of each line in the `#LOAD REQUIRED MODULES` section in each script (or remove these lines), and follow the [Conda environment preparation](#Conda environment preparation) to create custom conda environments with correct program versions and dependencies.
+Please add a '#' at the beginning of each line in the `#LOAD REQUIRED MODULES` section in each script (or remove these lines), and follow the [Conda environment preparation](#conda environment preparation) to create custom conda environments with correct program versions and dependencies.
 A R installation is also required.
 
 
