@@ -4,8 +4,7 @@
 # SV calling is done by sample for high-coverage genomes or in small batches for low-coverage genomes : we have high coverage (16X)
 # Following instructions for germline SV calling (https://github.com/dellytools/delly#germline-sv-calling)
 
-# valeria
-# parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 --mem=20G -p ibis_small --time=1-00:00:00 -J 01.1_delly_call_{} -o log/01.1_delly_call_{}_%j.log /bin/sh 01_scripts/01.1_delly_call.sh {} &
+# Activate the conda env before running: conda activate SVs_SR
 
 # manitou
 # parallel -a 02_infos/ind_ALL.txt -k -j 10 srun -c 1 --mem=20G -p small --time=1-00:00:00 -J 01.1_delly_call_{} -o log/01.1_delly_call_{}_%j.log /bin/sh 01_scripts/01.1_delly_call.sh {} &

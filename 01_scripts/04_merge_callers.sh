@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Merge SV calls across the 3 callers used
-# Jasmine must be installed in current env or session
 
-# valeria
-# srun -c 2 -p ibis_small --mem=100G --time=1-00:00:00 -J 04_merge_callers -o log/04_merge_%j.log /bin/sh 01_scripts/04_merge_callers.sh &
+# Activate the conda env before running: conda activate jasmine_1.1.5
 
 # manitou
 # srun -c 10 -p small -J 04_merge_callers --mem=100G -o log/04_merge_%j.log /bin/sh 01_scripts/04_merge_callers.sh &

@@ -2,10 +2,9 @@
 
 # Filter for SV calls tagged as PASS and PRECISE in delly's calls
 
-# valeria
-# srun -c 1 -p ibis_small -J 01.5_delly_filter --mem=20G --time=1-00:00:00 -o log/01.5_delly_filter_%j.log /bin/sh 01_scripts/01.5_delly_filter.sh &
+# Activate the conda env before running: conda activate SVs_SR
 
-# manitou
+# Manitou
 # srun -c 1 -p small -J 01.5_delly_filter -o log/01.5_delly_filter_%j.log /bin/sh 01_scripts/01.5_delly_filter.sh &
 
 # VARIABLES

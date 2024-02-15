@@ -4,7 +4,10 @@
 # SV calling is done by sample for high-coverage genomes or in small batches for low-coverage genomes : we have high coverage (16X)
 # Following instructions for germline SV calling (https://github.com/dellytools/delly#germline-sv-calling)
 
-# srun -p ibis_small --time=1-00:00:00 -J 01.2_delly_merge_sites -o log/01.2_delly_merge_sites_%j.log /bin/sh 01_scripts/01.2_delly_merge_sites.sh &
+# Activate the conda env before running: conda activate SVs_SR
+
+# manitou
+# srun -p small --time=1-00:00:00 -J 01.2_delly_merge_sites -o log/01.2_delly_merge_sites_%j.log /bin/sh 01_scripts/01.2_delly_merge_sites.sh &
 
 # VARIABLES
 GENOME="03_genome/genome.fasta"
