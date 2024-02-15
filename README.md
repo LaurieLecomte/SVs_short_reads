@@ -1,25 +1,3 @@
-- [SV calling pipeline from short-read sequencing data](#sv-calling-pipeline-from-short-read-sequencing-data)
-  - [Pipeline Overview](#pipeline-overview)
-    - [Additional scripts](#additional-scripts)
-  - [Prerequisites](#prerequisites)
-    - [Files](#files)
-    - [Software](#software)
-      - [For Manitou users](#for-manitou-users)
-      - [For users working with other computing clusters and servers](#for-users-working-with-other-computing-clusters-and-servers)
-  - [Detailed Walkthrough](#detailed-walkthrough)
-    - [Conda environment preparation](#conda-environment-preparation)
-      - [SV calling environment (`SVs_SR`)](#sv-calling-environment-svs_sr)
-      - [SV merging environment (`jasmine_1.1.5`)](#sv-merging-environment-jasmine_115)
-    - [Main pipeline](#main-pipeline)
-      - [1. Prepare region files (`00_prepare_regions.sh`)](#1-prepare-region-files-00_prepare_regionssh)
-      - [2. Call SVs using 3 seperate tools](#2-call-svs-using-3-seperate-tools)
-        - [Delly (scripts 01.1 to 01.5)](#delly-scripts-011-to-015)
-        - [Manta](#manta)
-        - [Smoove](#smoove)
-      - [3. Merge SV calls across callers (`04_merge_callers.sh`)](#3-merge-sv-calls-across-callers-04_merge_callerssh)
-      - [4. Format merged output (`05_format_merged.sh`)](#4-format-merged-output-05_format_mergedsh)
-      - [5. Filter merged SVs (`06_filter_merged.sh`)](#5-filter-merged-svs-06_filter_mergedsh)
-      
 # SV calling pipeline from short-read sequencing data
 
 ## Pipeline Overview
