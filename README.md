@@ -62,6 +62,7 @@ A R installation is also required.
 ## Detailed Walkthrough
 
 For running each script, copy the `srun` command from the script's header to the terminal and adjust parameters (memory, partition, time limit) if necessary.  
+The header also features a brief description of the script's contents. 
 
 
 ### Conda environment preparation
@@ -84,7 +85,7 @@ This environment is used for merging SVs across callers, and contains [jasmine 1
 
 ### Main pipeline
 
-#### `00_prepare_regions.sh`
+#### 1. Prepare region files (`00_prepare_regions.sh`)
 
 This script prepares the bed files required for specifying the regions in which SVs must be called or must not be called. It first produces a bed file from the reference fasta in order to yield : 
 
@@ -93,38 +94,39 @@ This script prepares the bed files required for specifying the regions in which 
 * A bed file of excluded regions, for running smoove
 
 
-#### Delly
+#### 2. Call SVs using 3 seperate tools
+
+##### Delly (scripts 01.1 to 01.5)
 
 Based on instructions for germline calling in high coverage genomes on [delly's GitHub](https://github.com/dellytools/delly#germline-sv-calling).
 
 Before running each script for delly, activate the `SVs_SR` env (even if you are working on Manitou) : `conda activate SVs_SR`
 
-##### `01.1_delly_call.sh`
+* `01.1_delly_call.sh`
+* `01.2_delly_merge_sites.sh`
+* `01.3_delly_genotype.sh`
+* `01.4_delly_merge_samples.sh`
+* `01.5_delly_filter.sh`
 
-##### `01.2_delly_merge_sites.sh`
-##### `01.3_delly_genotype.sh`
-##### `01.4_delly_merge_samples.sh`
-##### `01.5_delly_filter.sh`
+##### Manta
 
-#### Manta
+* `02.1_manta_call.sh`
+* `02.2_manta_merge.sh`
+* `02.3_manta_filter.sh`
 
-##### `02.1_manta_call.sh`
-##### `02.2_manta_merge.sh`
-##### `02.3_manta_filter.sh`
+##### Smoove
 
-#### Smoove
+* `03.1_smoove_call.sh`
+* `03.2_smoove_merge.sh`
+* `03.3_smoove_genotype.sh`
+* `03.4_smoove_merge_samples.sh`
+* `03.5_smoove_filter.sh`
 
-##### `03.1_smoove_call.sh`
-##### `03.2_smoove_merge.sh`
-##### `03.3_smoove_genotype.sh`
-##### `03.4_smoove_merge_samples.sh`
-##### `03.5_smoove_filter.sh`
-
-#### `04_merge_callers.sh`
+#### 3. Merge SV calls across callers (`04_merge_callers.sh`)
 Before running this script, activate the `jasmine_1.1.5` env (even if you are working on Manitou): `conda activate jasmine_1.1.5`
 
-#### `05_format_merged.sh`
+#### 4. Format merged output (`05_format_merged.sh`)
 
-#### `06_filter_merged.sh`
-
+#### 5. Filter merged SVs (`06_filter_merged.sh`)
+Keep SVs supported by at least 2/3 tools and larger than 50 bp.
 
